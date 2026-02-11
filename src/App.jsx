@@ -43,6 +43,8 @@
 
 // export default App
 
+// a
+
 // 
 
 import React from 'react'
@@ -53,6 +55,7 @@ import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
 import Navbar from './components/Navbar'
 import Profile from './pages/Profile'
+import Fetch from './pages/Fetch'
 
 const App = () => {
   return (
@@ -76,6 +79,8 @@ const App = () => {
 
       {/* Wildcard routing for 404 page */}
       <Route path='*' element={<NotFound/>}/>
+
+      <Route path='/fetch' element={<Fetch/>}/>
     </Routes>
 
 
