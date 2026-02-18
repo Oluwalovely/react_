@@ -56,6 +56,7 @@ import NotFound from './pages/NotFound'
 import Navbar from './components/Navbar'
 import Profile from './pages/Profile'
 import Fetch from './pages/Fetch'
+import Formikk from './pages/Formikk'
 
 const App = () => {
   return (
@@ -81,6 +82,8 @@ const App = () => {
       <Route path='*' element={<NotFound/>}/>
 
       <Route path='/fetch' element={<Fetch/>}/>
+
+      <Route path='/formikk' element={<Formikk/>}/>
     </Routes>
 
 
