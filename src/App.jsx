@@ -1,4 +1,3 @@
-
 // import React, { useState } from 'react'
 // import Button from './components/Button'
 // import Navbar from './components/Navbar'
@@ -22,17 +21,23 @@
 //     <Navbar/>
 //       <h1 style={designObj}>My first React app</h1>
 
-
-
 //       <h1 className='bg-primary text-warning'>{nameOfUser}</h1>
+
+//       <Button/>
+//       <Button/>
+//       <Button/>
+//       <Button/>
+//       <Button/>
+//       <Button/>
+//       <Button/>
+//       <Button/>
+//       <Button/>
 
 //       <button  className='btn btn-dark' onClick={()=>setnum(num+1)}>
 //        {num}
 //       </button>
 
-
 //       <h1>{name}</h1>
-
 
 //       <button className='btn btn-dark' onClick={()=>setname("Josh")}>
 //         click me to change name
@@ -43,52 +48,128 @@
 
 // export default App
 
-// a
+// import React, { useState } from 'react'
+// import Button from './components/Button'
+// import AddUser from './components/AddUser'
+// import DisplayUser from './components/DisplayUser'
 
-// 
+// const App = () => {
 
-import React from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
-import Home from './pages/Home'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import NotFound from './pages/NotFound'
-import Navbar from './components/Navbar'
-import Profile from './pages/Profile'
-import Fetch from './pages/Fetch'
-import Formikk from './pages/Formikk'
+//   const [allUsers, setallUsers] = useState([])
+
+//   // const seeValue=(event)=>{
+//   //   console.log(event.target.value);
+//   //   setfirstName(event.target.value)
+//   // }
+
+//   const submitUser=(user)=>{
+//     // console.log('heelo');
+//     // let user = {
+//     //   firstName,
+//     //   lastName,
+//     //   email,
+//     //   profilePicture
+//     // }
+//     console.log(user);
+
+//     let fruits = ['mango', 'agbalumo', 'orange']
+//     let newFruits = [...fruits, 'Grape']
+//     let newAllUsers= [...allUsers,user ]
+//     setallUsers(newAllUsers)
+//   }
+
+//   const deleteUser=(index)=>{
+//     let newAllUsers= [...allUsers]
+//     newAllUsers.splice(index, 1)
+//     setallUsers(newAllUsers)
+//   }
+
+//   const editUser=(index, user)=>{
+//     // let user = {
+//     //   firstName,
+//     //   lastName,
+//     //   email,
+//     //   profilePicture
+//     // }
+//     let newAllUsers= [...allUsers]
+//     newAllUsers.splice(index, 1, user)
+//     setallUsers(newAllUsers)
+//   }
+
+//   const shout=(name)=>{
+//     alert(`shoutinggggggggggggggg ${name}`)
+//   }
+//   return (
+//     <>
+
+//     <Button title="Stop" color="btn-danger" func={shout}/>
+//     <Button title="Go" color="btn-success"/>
+//     <Button title="Get ready" color="btn-warning"/>
+
+//     <br />
+
+//   <AddUser submitUser={submitUser}/>
+
+//    <hr />
+
+//       <DisplayUser allUsers={allUsers} deleteUser={deleteUser} editUser={editUser}/>
+
+//     </>
+//   )
+// }
+
+// export default App
+
+import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import NotFound from "./pages/NotFound";
+import Contact from "./pages/Contact";
+import Navbar from "./components/Navbar";
+import Profile from "./pages/Profile";
+import Fetch from "./pages/Fetch";
+import Formikk from "./pages/Formikk";
+import LoginPage from "./pages/Login";
+import AuthGuard from "./auth/AuthGuard";
+import Cookies from "universal-cookie";
+import AddProductPage from "./pages/AddProduct";
 
 const App = () => {
+  const cookies = new Cookies();
+  // console.log(cookies.get("token"));
+
+  const isAuth = cookies.get("token");
+
   return (
     <>
-    <Navbar/>
+      <Navbar />
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route index element={<Home />} />
 
-    <Routes>
-      <Route index element={<Home/>}/>
+        <Route element={<AuthGuard isAuth={isAuth} />}>
+          <Route path="/about" element={<About />} />
 
-      <Route path='/about' element={<About/>}/>
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/fetch" element={<Fetch />} />
+          <Route path="/formikk" element={<Formikk />} />
+          <Route path="/addproduct" element={<AddProductPage />} />
 
-      <Route path='/contact' element={<Contact/>}/>
+          {/* programmatic redirection */}
+          <Route path="/sp-contact" element={<Navigate to={"/contact"} />} />
 
-      {/* Programmatic redirection */}
-      <Route path='/sp-contact' element={<Navigate to={'/contact'}/>}/> 
+          {/* dynamic routes */}
+          <Route path="/profile/:username" element={<Profile />} />
+        </Route>
 
-      {/* Dynamic routes */}
-      <Route path='/profile/:username' element={<Profile/>}/>
+        {/* nested/children routes */}
 
-      {/* nested/children routes */}
-
-      {/* Wildcard routing for 404 page */}
-      <Route path='*' element={<NotFound/>}/>
-
-      <Route path='/fetch' element={<Fetch/>}/>
-
-      <Route path='/formikk' element={<Formikk/>}/>
-    </Routes>
-
-
+        {/* wildcard routing */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
