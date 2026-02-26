@@ -5,7 +5,19 @@ const AddProductPage = () => {
     const [image, setimage] = useState(null)
 
     const handleFileChange=(e)=>{
-        console.log(e.target.files);
+        console.log(e.target.files[0]);
+        let file = e.target.files[0]
+
+        let fileReader = new FileReader();
+        fileReader.onloadend = () =>{
+          console.log(fileReader.result);
+          setimage(file)
+          
+        };
+
+        file=fileReader.readAsDataURL(file)
+        console.log(file);
+        
         
     }
   const formik = useFormik({
